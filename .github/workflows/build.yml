@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: "ubuntu-latest"
+    name: Release for Pi
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build binary
+        uses: houseabsolute/actions-rust-cross@v0
+        with:
+          command: "build"
+          target: "armv7-unknown-linux-musleabihf"
+          args: "--locked --release"
+          strip: true
