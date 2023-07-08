@@ -20,10 +20,11 @@ jobs:
       - name: Publish release artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: precious-${{ matrix.platform.os_name }}
+          name: snappwr
           path: "target/armv7-unknown-linux-musleabihf/release/snappwr"
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: false
           files: "snappwr"
