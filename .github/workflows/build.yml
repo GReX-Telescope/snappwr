@@ -17,3 +17,18 @@ jobs:
           target: "armv7-unknown-linux-musleabihf"
           args: "--locked --release"
           strip: true
+      - name: Publish release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: precious-${{ matrix.platform.os_name }}
+          path: "target/armv7-unknown-linux-musleabihf/release/snappwr"
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          env:
+            GITHUB_TOKEN: ${{ github.token }}
