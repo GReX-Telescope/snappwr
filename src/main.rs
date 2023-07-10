@@ -1,6 +1,8 @@
 use clap::{Parser, ValueEnum};
 use rppal::gpio::Gpio;
 use std::error::Error;
+use std::thread;
+use std::time::Duration;
 
 const SNAP_POWER_PIN: u8 = 20;
 
@@ -28,6 +30,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         State::On => pin.set_high(),
         State::Off => pin.set_low(),
     }
+
+    pin.set_high();
+    thread::sleep(Duration::from_secs(1));
+    pin.set_low();
 
     Ok(())
 }
